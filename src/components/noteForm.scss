@@ -1,0 +1,16 @@
+.add-note-form {
+  text-align: center;
+  color: #fff;
+  width: 50%;
+  margin: 0 auto;
+
+  &__label {
+    font-size: 21px;
+  }
+
+  &__textarea {
+    margin: 0 auto;
+    width: 50% !important;
+    height: 100px !important;
+  }
+}
