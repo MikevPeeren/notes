@@ -1,5 +1,5 @@
 // React
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 // CSS
 import './App.scss';
@@ -8,14 +8,36 @@ import './App.scss';
 import { headerText } from './constants/general';
 
 import NoteForm from './components/noteForm';
+import Note from './components/note';
 
 const App = () => {
+  const [update, setUpdate] = useState(false);
+  const currentNotes = JSON.parse(localStorage.getItem('notes')) || [];
+
+  useEffect(() => {}, [update]);
+
+  const shouldUpdate = () => {
+    setUpdate(!update);
+  };
+
   return (
     <div className="App">
       <header className="header-text">
         <p>{headerText}</p>
       </header>
-      <NoteForm />
+      <NoteForm shouldUpdate={shouldUpdate} />
+      <div className="note">
+        {currentNotes.map((note, key) => {
+          return (
+            <Note
+              key={key}
+              noteKey={key}
+              note={note}
+              shouldUpdate={shouldUpdate}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 };

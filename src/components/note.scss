@@ -1,0 +1,9 @@
+.card-note {
+  display: inline-block !important; // Overriding bootstrap
+  background: #feff9c !important; // Overriding bootstrap
+  margin: 10px;
+
+  &__button {
+    margin: 5px;
+  }
+}

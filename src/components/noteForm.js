@@ -1,5 +1,6 @@
 // React
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 // React Bootstrap
 import { Form, FormGroup, Label, Input, Button, Col } from 'reactstrap';
@@ -9,8 +10,9 @@ import './noteForm.scss';
 
 // Constants
 import { createNote, addNote } from '../constants/notes';
-const NoteForm = () => {
-  const [noteText, setNoteText] = useState(0);
+
+const NoteForm = props => {
+  const [noteText, setNoteText] = useState();
 
   const addNoteToStorage = event => {
     event.preventDefault();
@@ -19,6 +21,7 @@ const NoteForm = () => {
     const newNotes = [...currentNotes, noteText];
 
     localStorage.setItem('notes', JSON.stringify(newNotes));
+    props.shouldUpdate();
   };
 
   const handleChange = event => {
@@ -54,6 +57,10 @@ const NoteForm = () => {
       </Form>
     </div>
   );
+};
+
+NoteForm.propTypes = {
+  shouldUpdate: PropTypes.func.isRequired,
 };
 
 export default NoteForm;
