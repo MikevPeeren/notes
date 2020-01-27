@@ -1,18 +1,28 @@
 // React
 import React, { useState } from 'react';
+
 import PropTypes from 'prop-types';
 
 // React Bootstrap
-import { Card, CardText, CardBody, CardTitle, Button, Input } from 'reactstrap';
+import { Card, CardBody, CardTitle, Button, Input } from 'reactstrap';
 
 // CSS
 import './note.scss';
 
 // Constants
+import { saveNote, editNote, deleteNote } from '../constants/notes';
+
+// Markdown Converter
+const showdown = require('showdown');
+
+// React Markdown
+const ReactMarkdown = require('react-markdown/with-html');
 
 const Note = props => {
   const [noteText, setNoteText] = useState();
   const [isInEditMode, setIsInEditMode] = useState(false);
+
+  const converter = new showdown.Converter();
 
   const handleEdit = () => {
     setIsInEditMode(true);
@@ -23,8 +33,8 @@ const Note = props => {
 
     const currentNotes = JSON.parse(localStorage.getItem('notes')) || [];
 
-    // Update the NoteText
-    currentNotes[noteKey] = noteText;
+    currentNotes[noteKey] = converter.makeHtml(noteText);
+
     localStorage.setItem('notes', JSON.stringify(currentNotes));
 
     setIsInEditMode(false);
@@ -49,6 +59,7 @@ const Note = props => {
         {isInEditMode ? (
           <>
             <Input
+              className="card-note__textarea"
               type="textarea"
               name="text"
               id="addNoteText"
@@ -62,19 +73,19 @@ const Note = props => {
                 handleSave(event, props.noteKey);
               }}
             >
-              Save Note
+              {saveNote}
             </Button>
           </>
         ) : (
           <>
-            <CardText>{props.note}</CardText>
+            <ReactMarkdown source={props.note} escapeHtml={false} />
             <Button
               className="card-note__button-left"
               onClick={() => {
                 handleEdit();
               }}
             >
-              Edit Note
+              {editNote}
             </Button>
             <Button
               className="card-note__button-right"
@@ -82,7 +93,7 @@ const Note = props => {
                 handleDelete(props.noteKey);
               }}
             >
-              Delete Note
+              {deleteNote}
             </Button>
           </>
         )}
