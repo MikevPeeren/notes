@@ -1,9 +1,9 @@
 // React
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 // React Bootstrap
-import { Card, CardText, CardBody, CardTitle, Button } from 'reactstrap';
+import { Card, CardText, CardBody, CardTitle, Button, Input } from 'reactstrap';
 
 // CSS
 import './note.scss';
@@ -11,8 +11,28 @@ import './note.scss';
 // Constants
 
 const Note = props => {
-  const handleEdit = event => {
-    // ToDo edit the text
+  const [noteText, setNoteText] = useState();
+  const [isInEditMode, setIsInEditMode] = useState(false);
+
+  const handleEdit = () => {
+    setIsInEditMode(true);
+  };
+
+  const handleSave = (event, noteKey) => {
+    event.preventDefault();
+
+    const currentNotes = JSON.parse(localStorage.getItem('notes')) || [];
+
+    // Update the NoteText
+    currentNotes[noteKey] = noteText;
+    localStorage.setItem('notes', JSON.stringify(currentNotes));
+
+    setIsInEditMode(false);
+    props.shouldUpdate();
+  };
+
+  const handleChange = event => {
+    setNoteText(event.target.value);
   };
 
   const handleDelete = noteKey => {
@@ -26,18 +46,46 @@ const Note = props => {
     <Card className="card-note">
       <CardBody>
         <CardTitle>Note {props.noteKey + 1}</CardTitle>
-        <CardText> {props.note}</CardText>
-        <Button className="card-note__button" onClick={handleEdit}>
-          Edit Note
-        </Button>
-        <Button
-          className="card-note__button"
-          onClick={() => {
-            handleDelete(props.noteKey);
-          }}
-        >
-          Delete Note
-        </Button>
+        {isInEditMode ? (
+          <>
+            <Input
+              type="textarea"
+              name="text"
+              id="addNoteText"
+              onChange={event => {
+                handleChange(event);
+              }}
+            />
+            <Button
+              className="card-note__button"
+              onClick={event => {
+                handleSave(event, props.noteKey);
+              }}
+            >
+              Save Note
+            </Button>
+          </>
+        ) : (
+          <>
+            <CardText>{props.note}</CardText>
+            <Button
+              className="card-note__button-left"
+              onClick={() => {
+                handleEdit();
+              }}
+            >
+              Edit Note
+            </Button>
+            <Button
+              className="card-note__button-right"
+              onClick={() => {
+                handleDelete(props.noteKey);
+              }}
+            >
+              Delete Note
+            </Button>
+          </>
+        )}
       </CardBody>
     </Card>
   );

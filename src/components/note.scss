@@ -2,8 +2,26 @@
   display: inline-block !important; // Overriding bootstrap
   background: #feff9c !important; // Overriding bootstrap
   margin: 10px;
+  height: 200px;
+  width: 300px;
 
   &__button {
-    margin: 5px;
+    margin-top: 27px;
+  }
+
+  &__button-left {
+    margin-left: 45px;
+    margin-bottom: 15px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+  }
+
+  &__button-right {
+    margin-right: 45px;
+    margin-bottom: 15px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
   }
 }
