@@ -17,9 +17,16 @@ const NoteForm = props => {
   const addNoteToStorage = event => {
     event.preventDefault();
 
-    const currentNotes = JSON.parse(localStorage.getItem('notes')) || [];
-    const newNotes = [...currentNotes, noteText];
+    const today = new Date().toDateString();
 
+    const currentNotes = JSON.parse(localStorage.getItem('notes')) || [];
+    const newNotes = [
+      ...currentNotes,
+      {
+        noteText: noteText,
+        date: today,
+      },
+    ];
     localStorage.setItem('notes', JSON.stringify(newNotes));
     props.shouldUpdate();
   };

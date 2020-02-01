@@ -4,13 +4,26 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 // React Bootstrap
-import { Card, CardBody, CardTitle, Button, Input } from 'reactstrap';
+import {
+  Card,
+  CardBody,
+  CardTitle,
+  Button,
+  Input,
+  CardSubtitle,
+} from 'reactstrap';
 
 // CSS
 import './note.scss';
 
 // Constants
-import { saveNote, editNote, deleteNote } from '../constants/notes';
+import {
+  saveNote,
+  editNote,
+  deleteNote,
+  noteTitle,
+  noteSubtitle,
+} from '../constants/notes';
 
 // Markdown Converter
 const showdown = require('showdown');
@@ -33,7 +46,12 @@ const Note = props => {
 
     const currentNotes = JSON.parse(localStorage.getItem('notes')) || [];
 
-    currentNotes[noteKey] = converter.makeHtml(noteText);
+    const today = new Date().toDateString();
+
+    currentNotes[noteKey] = {
+      noteText: converter.makeHtml(noteText),
+      date: today,
+    };
 
     localStorage.setItem('notes', JSON.stringify(currentNotes));
 
@@ -55,7 +73,12 @@ const Note = props => {
   return (
     <Card className="card-note">
       <CardBody>
-        <CardTitle>Note {props.noteKey + 1}</CardTitle>
+        <CardTitle className="card-note__title">
+          {noteTitle} {props.noteKey + 1}
+        </CardTitle>
+        <CardSubtitle className="card-note__subtitle">
+          {noteSubtitle} {props.noteDate}
+        </CardSubtitle>
         {isInEditMode ? (
           <>
             <Input
@@ -78,7 +101,7 @@ const Note = props => {
           </>
         ) : (
           <>
-            <ReactMarkdown source={props.note} escapeHtml={false} />
+            <ReactMarkdown source={props.noteText} escapeHtml={false} />
             <Button
               className="card-note__button-left"
               onClick={() => {
@@ -104,7 +127,8 @@ const Note = props => {
 
 Note.propTypes = {
   noteKey: PropTypes.number.isRequired,
-  note: PropTypes.string.isRequired,
+  noteText: PropTypes.string.isRequired,
+  noteDate: PropTypes.string.isRequired,
   shouldUpdate: PropTypes.func.isRequired,
 };
 

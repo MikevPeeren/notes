@@ -32,7 +32,8 @@ const App = () => {
             <Note
               key={key}
               noteKey={key}
-              note={note}
+              noteText={note.noteText}
+              noteDate={note.date}
               shouldUpdate={shouldUpdate}
             />
           );

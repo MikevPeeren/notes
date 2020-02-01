@@ -5,9 +5,17 @@
   height: 400px;
   width: 600px;
 
+  &__title {
+    padding: 0px;
+  }
+
+  &__subtitle {
+    padding: 15px;
+  }
+
   &__textarea {
     margin: 0 auto;
-    height: 250px !important;
+    height: 200px !important;
   }
 
   &__button {
