@@ -13,7 +13,11 @@ Create and store your notes for a later purpose!
 - [x] ~User can delete a note~
 - [x] ~When closing the browser window the notes will be stored and when the User returns, the data will be retrieved~
 
-## Bonus features
+## Bonus Features
 
 - [x] ~User can create and edit a note in Markdown format. On save it will convert Markdown to HTML~
-- [] User can see the date when he created the note
+- [x] ~User can see the date when he created the note~
+
+## Extra Feature
+
+- [] Convert JS to TS
