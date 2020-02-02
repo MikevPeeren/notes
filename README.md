@@ -20,4 +20,4 @@ Create and store your notes for a later purpose!
 
 ## Extra Feature
 
-- [] Convert JS to TS
+- [x] ~Convert JS to TS~
