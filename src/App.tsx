@@ -12,7 +12,12 @@ import Note from './components/note';
 
 const App = () => {
   const [update, setUpdate] = useState(false);
-  const currentNotes = JSON.parse(localStorage.getItem('notes')) || [];
+
+  let currentNotes = [];
+  const storageNotes: string | null = localStorage.getItem('notes');
+  if (storageNotes) {
+    currentNotes = JSON.parse(storageNotes);
+  }
 
   useEffect(() => {}, [update]);
 
@@ -27,17 +32,19 @@ const App = () => {
       </header>
       <NoteForm shouldUpdate={shouldUpdate} />
       <div className="note">
-        {currentNotes.map((note, key) => {
-          return (
-            <Note
-              key={key}
-              noteKey={key}
-              noteText={note.noteText}
-              noteDate={note.date}
-              shouldUpdate={shouldUpdate}
-            />
-          );
-        })}
+        {currentNotes.map(
+          (note: { noteText: string; date: string }, key: number) => {
+            return (
+              <Note
+                key={key}
+                noteKey={key}
+                noteText={note.noteText}
+                noteDate={note.date}
+                shouldUpdate={shouldUpdate}
+              />
+            );
+          },
+        )}
       </div>
     </div>
   );

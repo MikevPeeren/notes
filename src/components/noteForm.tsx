@@ -11,15 +11,20 @@ import './noteForm.scss';
 // Constants
 import { createNote, addNote } from '../constants/notes';
 
-const NoteForm = props => {
+const NoteForm = (props: any) => {
   const [noteText, setNoteText] = useState();
 
-  const addNoteToStorage = event => {
+  const addNoteToStorage = (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
     const today = new Date().toDateString();
 
-    const currentNotes = JSON.parse(localStorage.getItem('notes')) || [];
+    let currentNotes = [];
+    const storageNotes: string | null = localStorage.getItem('notes');
+    if (storageNotes) {
+      currentNotes = JSON.parse(storageNotes);
+    }
+
     const newNotes = [
       ...currentNotes,
       {
@@ -27,11 +32,12 @@ const NoteForm = props => {
         date: today,
       },
     ];
+
     localStorage.setItem('notes', JSON.stringify(newNotes));
     props.shouldUpdate();
   };
 
-  const handleChange = event => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNoteText(event.target.value);
   };
 

@@ -31,7 +31,7 @@ const showdown = require('showdown');
 // React Markdown
 const ReactMarkdown = require('react-markdown/with-html');
 
-const Note = props => {
+const Note = (props: any) => {
   const [noteText, setNoteText] = useState();
   const [isInEditMode, setIsInEditMode] = useState(false);
 
@@ -41,10 +41,17 @@ const Note = props => {
     setIsInEditMode(true);
   };
 
-  const handleSave = (event, noteKey) => {
+  const handleSave = (
+    event: React.MouseEvent<any, MouseEvent>,
+    noteKey: number,
+  ) => {
     event.preventDefault();
 
-    const currentNotes = JSON.parse(localStorage.getItem('notes')) || [];
+    let currentNotes = [];
+    const storageNotes: string | null = localStorage.getItem('notes');
+    if (storageNotes) {
+      currentNotes = JSON.parse(storageNotes);
+    }
 
     const today = new Date().toDateString();
 
@@ -59,14 +66,18 @@ const Note = props => {
     props.shouldUpdate();
   };
 
-  const handleChange = event => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNoteText(event.target.value);
   };
 
-  const handleDelete = noteKey => {
-    const notes = JSON.parse(localStorage.getItem('notes')) || [];
-    notes.splice(noteKey, 1);
-    localStorage.setItem('notes', JSON.stringify(notes));
+  const handleDelete = (noteKey: number) => {
+    let currentNotes = [];
+    const storageNotes: string | null = localStorage.getItem('notes');
+    if (storageNotes) {
+      currentNotes = JSON.parse(storageNotes);
+    }
+    currentNotes.splice(noteKey, 1);
+    localStorage.setItem('notes', JSON.stringify(currentNotes));
     props.shouldUpdate();
   };
 
