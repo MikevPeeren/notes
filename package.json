@@ -9,7 +9,7 @@
     "@types/react-dom": "^16.9.6",
     "@types/reactstrap": "^8.4.2",
     "bootstrap": "^4.4.1",
-    "node-sass": "^4.13.1",
+    "node-sass": "^4.14.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-markdown": "^4.3.1",
