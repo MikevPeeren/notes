@@ -12,7 +12,7 @@ import './noteForm.scss';
 import { createNote, addNote } from '../constants/notes';
 
 const NoteForm = (props: any) => {
-  const [noteText, setNoteText] = useState();
+  const [noteText, setNoteText] = useState('');
 
   const addNoteToStorage = (event: { preventDefault: () => void }) => {
     event.preventDefault();
@@ -54,7 +54,7 @@ const NoteForm = (props: any) => {
               type="textarea"
               name="text"
               id="addNoteText"
-              onChange={event => {
+              onChange={(event) => {
                 handleChange(event);
               }}
             />

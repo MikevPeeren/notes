@@ -29,10 +29,10 @@ import {
 const showdown = require('showdown');
 
 // React Markdown
-const ReactMarkdown = require('react-markdown/with-html');
+const ReactMarkdown = require('react-markdown');
 
 const Note = (props: any) => {
-  const [noteText, setNoteText] = useState();
+  const [noteText, setNoteText] = useState('');
   const [isInEditMode, setIsInEditMode] = useState(false);
 
   const converter = new showdown.Converter();
@@ -97,13 +97,13 @@ const Note = (props: any) => {
               type="textarea"
               name="text"
               id="addNoteText"
-              onChange={event => {
+              onChange={(event) => {
                 handleChange(event);
               }}
             />
             <Button
               className="card-note__button"
-              onClick={event => {
+              onClick={(event) => {
                 handleSave(event, props.noteKey);
               }}
             >
@@ -112,7 +112,7 @@ const Note = (props: any) => {
           </>
         ) : (
           <>
-            <ReactMarkdown source={props.noteText} escapeHtml={false} />
+            <ReactMarkdown>{props.noteText}</ReactMarkdown>
             <Button
               className="card-note__button-left"
               onClick={() => {
