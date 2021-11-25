@@ -17,7 +17,7 @@
     "reactstrap": "^8.10.1",
     "sass": "^1.43.5",
     "showdown": "^1.9.1",
-    "typescript": "^4.4.4"
+    "typescript": "^4.5.2"
   },
   "scripts": {
     "start": "react-scripts start",
